@@ -24,6 +24,10 @@ Route.get('/', async ({ view }) => {
   return view.render('welcome')
 })
 
+Route.get('/sample', async () => {
+  return {"message": "ok"}
+})
+
 Route.post('login', 'AuthController.login')
 
 Route.group(() => {
