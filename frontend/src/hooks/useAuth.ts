@@ -8,6 +8,8 @@ export const useAuth = () => {
         password: string;
     }
 
+    // TODO: might need useEffect here
+
     const login = async ({email, password}: Credentials) => {
         console.log("Login is running")
         const res = await axios.post('/login', {email, password})
