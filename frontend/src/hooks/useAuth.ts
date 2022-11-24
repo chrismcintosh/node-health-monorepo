@@ -5,7 +5,7 @@ import { useCookies } from "react-cookie"
 export const useAuth = () => {
 
     const [cookie, setCookie, removeCookie] = useCookies(["token"])
-    
+
     interface Credentials {
         email: string;
         password: string;
@@ -30,8 +30,7 @@ export const useAuth = () => {
     })
 
     const fetchUser = async () =>  {
-
-        if (!cookie) {
+        if (!cookie || !cookie.token) {
             return null
         }
 
