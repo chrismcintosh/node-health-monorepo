@@ -34,4 +34,6 @@ Route.group(() => {
   Route.get('/dashboard', async () => {
     return "you made it"
   })
+
+  Route.get('/user', 'AuthController.show')
 }).middleware('auth')

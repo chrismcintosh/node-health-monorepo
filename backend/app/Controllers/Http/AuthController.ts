@@ -8,16 +8,16 @@ export default class AuthController {
         const password = ctx.request.input('password')
 
         try {
-          const token = await ctx.auth.use('api').attempt(email, password)
+          const token_payload = await ctx.auth.use('api').attempt(email, password)
 
-          if (token) {
-              const user = await User.findByOrFail('email', email)
+          const user_id = token_payload.user.id
+          const user_email = token_payload.user.email
+          const token = token_payload.token
 
-              return {
-                "id": user.id,
-                email,
-                token
-              }
+          return {
+            token,
+            user_id,
+            user_email
           }
 
         } catch {
@@ -25,7 +25,9 @@ export default class AuthController {
         }
     }
 
-    public async sample() {
-      return {"message": "ok"}
+    public async show({auth}){
+      // const token = ctx.request.input('token')
+      return await auth.use('api').authenticate()
+      // const user = await User.findByOrFail('email', email)
     }
 }

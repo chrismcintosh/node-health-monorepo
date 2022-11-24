@@ -6,8 +6,6 @@ import LoginForm from '../src/components/LoginForm'
 
 export default function Home() {
 
-  const { login } = useAuth()
-
   return (
     <div className={styles.container}>
       <Head>
@@ -22,8 +20,6 @@ export default function Home() {
         </h1>
 
         <LoginForm />
-        
-        <button onClick={() => login() }>User</button>
 
         <p className={styles.description}>
           Get started by editing the file{' '}

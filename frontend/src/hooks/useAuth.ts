@@ -1,25 +1,54 @@
 import axios from '../lib/axios'
 import { useQuery } from '@tanstack/react-query'
+import { useCookies } from "react-cookie"
 
 export const useAuth = () => {
 
+    const [cookie, setCookie, removeCookie] = useCookies(["token"])
+    
     interface Credentials {
         email: string;
         password: string;
     }
 
-    // TODO: might need useEffect here
-
     const login = async ({email, password}: Credentials) => {
-        console.log("Login is running")
         const res = await axios.post('/login', {email, password})
-        console.log(res)
+        const token = res.data.token
+
+        setCookie("token", JSON.stringify(token), {
+            path: "/",
+            maxAge: 3600 * 24, // Expires after 1hr
+            sameSite: true,
+        })
+
+        return token
     }
 
-    const user = useQuery({ queryKey: ['user'], queryFn: login })
+    const { data: user, isLoading, isError, error } = useQuery({ 
+        queryKey: ['user', cookie.token], 
+        queryFn: () => fetchUser()
+    })
+
+    const fetchUser = async () =>  {
+
+        if (!cookie) {
+            return null
+        }
+
+        const req = await axios.get('/user', {
+            headers: { Authorization: `Bearer ${cookie.token}` }
+        })
+        
+        return req.data
+    }
+
+    const logout = async() => {
+        removeCookie("token")
+    }
     
     return {
         user,
         login,
+        logout
     }
 }
