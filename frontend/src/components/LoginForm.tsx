@@ -8,8 +8,6 @@ export default function LoginForm () {
     const [password, setPassword] = useState('')
 
     if (user) {
-        console.log("successful use of useAuth hook")
-        console.log(user)
         return (
             <button onClick={() => logout()}>Logout</button>
         )

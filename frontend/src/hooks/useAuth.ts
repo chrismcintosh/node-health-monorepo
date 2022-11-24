@@ -24,9 +24,14 @@ export const useAuth = () => {
         return token
     }
 
-    const { data: user, isLoading, isError, error } = useQuery({ 
+    const { 
+        data: user,
+        isLoading: userIsLoading,
+        isError: userIsError,
+        error: userError 
+    } = useQuery({ 
         queryKey: ['user', cookie.token], 
-        queryFn: () => fetchUser()
+        queryFn: () => fetchUser(),
     })
 
     const fetchUser = async () =>  {

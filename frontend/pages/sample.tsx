@@ -5,12 +5,10 @@ export default function Sample() {
 
     const { user } = useAuth()
 
-    console.log(user)
-
     if (user) {
         return (
             <div>
-                There is a user
+                There is a user {user.email}
             </div>
         )
     } else {
