@@ -1,5 +1,4 @@
 import type { HttpContextContract } from '@ioc:Adonis/Core/HttpContext'
-import User from 'App/Models/User'
 
 
 export default class AuthController {
@@ -26,8 +25,6 @@ export default class AuthController {
     }
 
     public async show({auth}){
-      // const token = ctx.request.input('token')
       return await auth.use('api').authenticate()
-      // const user = await User.findByOrFail('email', email)
     }
 }
