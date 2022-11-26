@@ -20,20 +20,20 @@
 
 import Route from '@ioc:Adonis/Core/Route'
 
+/**
+ * Unprotected Routes
+ */
 Route.get('/', async ({ view }) => {
   return view.render('welcome')
 })
 
-Route.get('/sample', async () => {
-  return {"message": "ok"}
-})
-
 Route.post('login', 'AuthController.login')
 
+/**
+ * Protected Routes
+ */
 Route.group(() => {
-  Route.get('/dashboard', async () => {
-    return "you made it"
-  })
-
+  
   Route.get('/user', 'AuthController.show')
+
 }).middleware('auth')
